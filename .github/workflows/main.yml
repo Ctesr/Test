@@ -25,13 +25,13 @@ jobs:
           source venv/bin/activate
           pip install --upgrade pip
           pip install -r requirements.txt
-          pip install py2app
+          pip install pyinstaller  # 安装 PyInstaller
 
       - name: Build MacOS app
         run: |
           source venv/bin/activate
-          python setup.py py2app
-          ls -R dist  # 递归列出 dist 目录内容，检查 .app 文件路径
+          pyinstaller --windowed --onefile --name=MyApp remove_transparency.py  # 使用 PyInstaller 打包
+          ls -R dist  # 递归列出 dist 目录内容，检查生成的文件
 
       - name: Upload .app file
         uses: actions/upload-artifact@v4  # 使用最新版本
