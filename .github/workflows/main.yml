@@ -33,7 +33,7 @@ jobs:
           ls -l dist  # 输出 dist 文件夹的内容，检查 .app 是否生成
 
       - name: Upload .app file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: MyApp
           path: dist/*.app  # 上传所有 .app 文件
