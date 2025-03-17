@@ -5,17 +5,17 @@ on:
     branches:
       - main
   workflow_dispatch:  # 允许手动触发
-  
+
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4  # 升级到最新版本
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5  # 升级到最新版本
         with:
           python-version: '3.9'
 
@@ -23,6 +23,7 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
+          pip install --upgrade pip
           pip install -r requirements.txt
           pip install py2app
 
@@ -30,10 +31,10 @@ jobs:
         run: |
           source venv/bin/activate
           python setup.py py2app
-          ls -l dist  # 输出 dist 文件夹的内容，检查 .app 是否生成
+          ls -R dist  # 递归列出 dist 目录内容，检查 .app 文件路径
 
       - name: Upload .app file
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4  # 使用最新版本
         with:
           name: MyApp
-          path: dist/*.app  # 上传所有 .app 文件
+          path: dist/**/*.app  # 递归匹配所有子目录中的 .app 文件
