@@ -1,0 +1,31 @@
+name: Build MacOS App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build MacOS app
+        run: |
+          pyinstaller --onefile --windowed --name "Remove" --icon=icon.icns remove_transparency.py
+
+      - name: Upload .app file
+        uses: actions/upload-artifact@v2
+        with:
+          name: Remove
+          path: dist/Remove.app
