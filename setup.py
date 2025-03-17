@@ -5,7 +5,7 @@ DATA_FILES = []
 OPTIONS = {
     'argv_emulation': True,
     'packages': ['PIL'],  # 替换为你的依赖包
-    'iconfile': './ico.ico'
+    'iconfile': 'ico.ico'
 }
 
 setup(
