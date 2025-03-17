@@ -5,7 +5,7 @@ on:
     branches:
       - main
   workflow_dispatch:  # 允许手动触发
-
+  
 jobs:
   build:
     runs-on: macos-latest
@@ -14,19 +14,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
       - name: Install dependencies
         run: |
-          python3 -m venv venv
+          python -m venv venv
           source venv/bin/activate
           pip install -r requirements.txt
-          pip install pyinstaller
+          pip install py2app
 
       - name: Build MacOS app
         run: |
-          pyinstaller --onefile --windowed --name "Remove" --icon=icon.icns remove_transparency.py
+          source venv/bin/activate
+          python setup.py py2app
+          ls -l dist  # 输出 dist 文件夹的内容，检查 .app 是否生成
 
       - name: Upload .app file
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: Remove
-          path: dist/Remove.app
+          name: MyApp
+          path: dist/*.app  # 上传所有 .app 文件
