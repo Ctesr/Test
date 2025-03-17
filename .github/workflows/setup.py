@@ -1,11 +1,10 @@
 from setuptools import setup
 
-APP = ['remove_transparency.py']  # 替换为你的Python脚本文件名
+APP = ['remove_transparency.py']  # 入口脚本文件名
 DATA_FILES = []
 OPTIONS = {
     'argv_emulation': True,
-    'packages': ['PIL'],  # 替换为你的依赖包
-    'iconfile': './ico.ico'
+    'packages': ['PIL'],  # 依赖包（Pillow 的包名是 PIL）
 }
 
 setup(
